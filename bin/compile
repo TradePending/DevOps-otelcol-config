@@ -18,6 +18,9 @@ OTELCOL_CONFIG=config.yml
 # Set buildpack dir
 BUILDPACK_DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
 
+# Pull in S3 object
+OTELCOL_CONFIG_S3=$(cat "$ENV_DIR/OTELCOL_CONFIG_S3")
+
 # Download
 if [ ! -f "$CACHE_DIR/$OTELCOL_CONFIG" ] || [ -n "$NOCACHE_OTELCOL" ]; then
   echo "-----> Installing $OTELCOL_CONFIG"
