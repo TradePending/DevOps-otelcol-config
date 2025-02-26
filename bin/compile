@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# Fail fast
+set -e
+set -o pipefail
+
+# Debug
+set -x
+
+# Parse params
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+OTELCOL_CONFIG=config.yml
+
+# Set buildpack dir
+BUILDPACK_DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
+
+# Download
+if [ ! -f "$CACHE_DIR/$OTELCOL_CONFIG" ] || [ -n "$NOCACHE_OTELCOL" ]; then
+  echo "-----> Installing $OTELCOL_CONFIG"
+aws cp "$BUILDPACK_DIR/extra/config.yml" "$CACHE_DIR/${OTELCOL_CONFIG}"
+
+else
+  echo "-----> OpenTelemetry config.yml found in cache"
+fi
+
+# Copy config.yml
+mkdir -p "$BUILD_DIR/otelcol"
+cp "$CACHE_DIR/${OTELCOL_CONFIG}" "$BUILD_DIR/otelcol/"
+

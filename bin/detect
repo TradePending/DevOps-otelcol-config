@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# bin/detect <build-dir>
+
+echo "OpenTelemetry Collector Config" && exit 0
