@@ -21,7 +21,7 @@ BUILDPACK_DIR=$(cd "$(dirname "$0")"; cd ..; pwd)
 # Download
 if [ ! -f "$CACHE_DIR/$OTELCOL_CONFIG" ] || [ -n "$NOCACHE_OTELCOL" ]; then
   echo "-----> Installing $OTELCOL_CONFIG"
-aws s3 cp "$BUILDPACK_DIR/extra/config.yml" "$CACHE_DIR/${OTELCOL_CONFIG}"
+aws s3 cp ${OTELCOL_CONFIG_S3} "$CACHE_DIR/${OTELCOL_CONFIG}"
 
 else
   echo "-----> OpenTelemetry config.yml found in cache"
